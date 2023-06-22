@@ -1,11 +1,15 @@
 import random
 import turtle 
+import winsound
 
 tela = turtle.Screen()
 tela.title("Pong Weezer por @JoaoAHaupt")
 tela.bgcolor("#189bcc") #Blue Album 
 tela.setup(width=1000, height=800)
 tela.tracer(0)
+
+pontos_taco_1 = 0
+pontos_taco_2 =0
 
 # Taco 1
 taco_1 = turtle.Turtle()
@@ -35,6 +39,13 @@ bola.goto(0, 0)
 bola.dx = 0.25
 bola.dy = -0.25
 
+pen = turtle.Turtle()
+pen.speed(0)
+pen.color("black")
+pen.penup()
+pen.hideturtle()
+pen.goto(0, 350)
+pen.write("Rivers Cuomo: 0  Brian Bell: 0 " , align= "center", font=("Courier", 30))
 
 def taco_1_up():
     y = taco_1.ycor() #Retorna a cordenada de y
@@ -61,12 +72,13 @@ while True:
     tela.update() 
     bola.setx(bola.xcor() + bola.dx)
     bola.sety(bola.ycor() + bola.dy)
+    taco_2.sety(bola.ycor() - 40.5)
     if taco_1.ycor() > 350:
         taco_1.sety(350)
     if taco_1.ycor() < -350:
         taco_1.sety(-350)
     
-    taco_2.sety(bola.ycor())
+
     if taco_2.ycor() > 350:
         taco_2.sety(350)
     if taco_2.ycor() < -350:
@@ -80,11 +92,23 @@ while True:
         bola.sety(-400)
         bola.dy *= -1
     
-    if bola.xcor() > 500 or bola.xcor() < -500:
+    if bola.xcor() > 500:
         bola.goto(0, 0)
         bola.dx *= -1
+        pontos_taco_1+=1
+        pen.clear()
+        pen.write("Rivers Cuomo: {}   Brian Bell: {}".format(pontos_taco_1, pontos_taco_2) , align= "center", font=("Courier", 30))
 
-    if bola.xcor() > 450 and bola.xcor() > taco_2.xcor() and(bola.ycor() < taco_2.ycor() + 40 and bola.ycor() > taco_2.ycor() - 40): 
+    if bola.xcor() < -500:
+        bola.goto(0, 0)
+        bola.dx *= -1
+        pontos_taco_2+=1
+        pen.clear()
+        pen.write("Rivers Cuomo: {}   Brian Bell: {}".format(pontos_taco_1, pontos_taco_2) , align= "center", font=("Courier", 30))
+
+
+
+    if bola.xcor() > 450 and bola.xcor() > taco_2.xcor() and(bola.ycor() < taco_2.ycor() + 50 and bola.ycor() > taco_2.ycor() - 50): 
         bola.setx(450)
         bola.dx *= -1
 
